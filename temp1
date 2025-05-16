@@ -1,7 +1,3 @@
-require("core.keymaps")
-require('lazynvim-init')
-require("core.options")
-
 local function getpos(width, height, pos, ui)
     local x, y = 0, 0
     if pos.pos then
