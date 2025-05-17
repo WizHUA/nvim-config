@@ -46,37 +46,37 @@ return {
                     },
                 }),
                 
-                -- Python
-                (function()
-                    -- 尝试多个可能的路径
-                    local possible_paths = {
-                        "/home/wizhua/.local/bin/black",  -- 绝对路径
-                        "/wizhua/.local/bin/black",       -- 另一种可能的路径
-                        "black",                          -- PATH 中的可执行文件
-                    }
-                    
-                    for _, path in ipairs(possible_paths) do
-                        local is_executable = vim.fn.executable(path) == 1
-                        -- 如果找到可执行的 black，立即返回
-                        if is_executable then
-                            vim.notify("已找到可执行的 black: " .. path, vim.log.levels.INFO)
-                            return null_ls.builtins.formatting.black.with({
-                                command = path,
-                            })
-                        end
-                    end
-                    
-                    -- 找不到任何可执行的 black
-                    vim.notify("无法找到可执行的 black 格式化工具", vim.log.levels.WARN)
-                    return nil
-                end)(),
-                
-                -- C/C++
-                vim.fn.executable("/usr/bin/clang-format") == 1 
-                    and null_ls.builtins.formatting.clang_format.with({
-                        command = "/usr/bin/clang-format",
-                    })
-                    or nil,
+                -- -- Python
+                -- (function()
+                    -- -- 尝试多个可能的路径
+                    -- local possible_paths = {
+                    --     "/home/wizhua/.local/bin/black",  -- 绝对路径
+                    --     "/wizhua/.local/bin/black",       -- 另一种可能的路径
+                    --     "black",                          -- PATH 中的可执行文件
+                    -- }
+                    -- 
+                    -- for _, path in ipairs(possible_paths) do
+                    --     local is_executable = vim.fn.executable(path) == 1
+                    --     -- 如果找到可执行的 black，立即返回
+                    --     if is_executable then
+                            -- vim.notify("已找到可执行的 black: " .. path, vim.log.levels.INFO)
+                            -- return null_ls.builtins.formatting.black.with({
+                                -- command = path,
+                            -- })
+                        -- end
+                    -- end
+                    -- 
+                    -- -- 找不到任何可执行的 black
+                    -- vim.notify("无法找到可执行的 black 格式化工具", vim.log.levels.WARN)
+                    -- return nil
+                -- end)(),
+                -- 
+                -- -- C/C++
+                -- vim.fn.executable("/usr/bin/clang-format") == 1 
+                    -- and null_ls.builtins.formatting.clang_format.with({
+                        -- command = "/usr/bin/clang-format",
+                    -- })
+                    -- or nil,
             },
         })
         

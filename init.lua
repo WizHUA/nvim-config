@@ -1,3 +1,3 @@
 require("core.keymaps")
-require('lazynvim-init')
+require("lazynvim-init")
 require("core.options")
