@@ -1,7 +1,30 @@
 return {
     "williamboman/mason.nvim",
     event = "VeryLazy",
-    opts = {},
+    opts = {
+        PATH = "prepend", -- 将 Mason 的 bin 目录添加到 PATH 开头
+        pip = {
+            -- 指定安装命令
+            install_args = {
+                "--user", -- 使用用户安装模式
+            },
+            -- upgrade_pip = true, -- 自动升级 pip
+        },
+        -- 可以指定 Python 解释器路径
+        -- python_path = vim.fn.exepath("python3"),
+        
+        -- 调整 UI 设置（可选）
+        ui = {
+            icons = {
+                package_installed = "✓",
+                package_pending = "➜",
+                package_uninstalled = "✗"
+            }
+        },
+        
+        -- 打开日志以便调试
+        log_level = vim.log.levels.DEBUG,
+    },
     dependencies = {
         "neovim/nvim-lspconfig",
         "williamboman/mason-lspconfig.nvim",
@@ -31,6 +54,20 @@ return {
                 package:install()
             end
 
+            -- 添加 on_attach 回调函数，禁用 LSP 格式化功能
+            config = config or {}
+            local original_on_attach = config.on_attach
+            config.on_attach = function(client, bufnr)
+                -- 禁用 LSP 格式化，由 none-ls 处理
+                client.server_capabilities.documentFormattingProvider = false
+                client.server_capabilities.documentRangeFormattingProvider = false
+                
+                -- 如果有原始的 on_attach，也执行它
+                if original_on_attach then
+                    original_on_attach(client, bufnr)
+                end
+            end
+            
             -- 直接使用传入的 lsp_name 配置 LSP
             lspconfig[lsp_name].setup(config or {})
         end
