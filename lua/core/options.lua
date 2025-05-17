@@ -29,3 +29,8 @@ opt. splitbelow = true
 -- 外观
 opt.termguicolors = true
 opt.signcolumn = "yes"
+
+-- 查找
+    -- 如果查找的内容中不存在大写，则大小写不敏感
+opt.ignorecase = true
+opt.smartcase = true
